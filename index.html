@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Editer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="style/main.css">
+</head>
+<body ondrop="return false;">
+  <div id="app">
+    <header class="header">header</header>
+    <el-row class="jw-main-wrap" :gutter="20">
+      <el-col :span="5" class="sidebar-wrap">
+        <div class="side-sub-item" @mousedown="sideItemMouseDown(item,$event)" v-for="item in sidebarList">
+          {{item.name}}
+        </div>
+          
+      </el-col>
+      <el-col :span="14" class="main-wrap">
+        <div class="main-frame" id="mainFrame">
+          <!-- 模块列表 S -->
+          <div id="sortModuleWrap" v-if="main.length">
+            <div class="module-item" v-for="(item,index) in main">
+              <div class="module-placeholder" @mouseover="sortMouseOver($event,index,1)" :class="sidebar.placeholder ? 'module-placeholder-active' : ''" v-show="sidebar.drag">{{index}}</div>
+              <div class="module-item-hd">
+                {{item.name}}
+              </div>
+              <div class="module-item-bd" @mouseover="sortMouseOver($event,index,2)" style='height:360px;background: #ff8;'>
+                <div class="module-sub-item" @mousedown="subMouseDown($event,index,subIndex)" v-if="item.children.length" v-for="(subItem,subIndex) in item.children" :style="{left:(subItem.sty.l),top:(subItem.sty.t),zIndex:(subItem.sty.z || (subIndex + 5))}">
+                  <button type="button" v-if="subItem.type=='btn'" :class="subItem.claName"><span>{{subItem.name}}{{subIndex}}</span></button>
+                  <div v-if="subItem.type=='img'" class="">{{subItem.name}}{{subIndex}}</div>
+                  <el-card v-if="subItem.type=='imgText'" :body-style="{ padding: '0px' }">
+                    <img src="https://img14.360buyimg.com/n0/jfs/t1/22025/36/2059/129213/5c18e910E694dc2f7/8d70cbd502121418.jpg" width="200" class="image">
+                    <div style="padding: 14px;">
+                      <span>{{subItem.name}}{{subIndex}}</span>
+                      <div class="bottom clearfix">
+                        <time class="time">2019-01-01 15:15:15</time>
+                        <el-button type="text" class="button">操作按钮</el-button>
+                      </div>
+                    </div>
+                  </el-card>
+
+                </div>
+                <div v-if="item.children.length == 0">
+                  暂无子模块，请添加模块
+                </div>
+              </div>
+            </div>
+            <div class="module-placeholder" @mouseover="sortMouseOver($event,main.length,1)" :class="sidebar.placeholder ? 'module-placeholder-active' : ''" v-show="sidebar.drag">{{main.length}}</div>
+          </div>
+          <!-- 模块列表 E -->
+          <!-- 暂无 S -->
+          <div v-else>
+            暂无模块，请添加模块
+          </div>
+          <!-- 暂无 E -->
+
+        </div>
+      </el-col>
+      <el-col :span="5" class="set-wrap">
+          33
+      </el-col>
+    </el-row>
+    <div class="drag-template" :class="sidebar.drag ? 'side-sub-item' :''" id="dragTemplate" v-show="sidebar.drag"></div>
+  </div>
+  <!-- 引入VUE -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+  <!-- 引入ElementUI -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
