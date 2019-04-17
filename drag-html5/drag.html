@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Drag</title>
+  <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .wrap{
+      display: flex;
+      justify-content:center;
+    }
+    .sidebar{
+      height: 500px;
+      width: 300px;
+      margin: 0 50px;
+      background: #f5f5f5;
+    }
+    .sitem{
+      display: inline-block;
+      vertical-align: top;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #3e7afa;
+      border-radius: 10px;
+    }
+    .main-content {
+      height: 500px;
+      width: 375px;
+      margin: 0 50px;
+      background: #c8c8c8;
+      display: flex;
+      overflow: hidden;
+      flex-direction:column;
+    }
+    .main-wrap{
+      width: 400px;
+      height: 500px;
+      overflow: auto;
+    }
+    .main {
+      width: 375px;
+      min-height: 500px;
+    }
+
+
+    .mitem{
+      width: 100%;
+      min-height: 100px;
+    }    
+    .mitem-hd{
+      height: 50px;
+      line-height: 50px;
+      background: #ffa053;
+      color:#3e7afa;
+    }
+    
+    .mitem-bd{
+      min-height: 50px;
+      background: #FFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="sidebar" id="sidebar">
+      <div class="sitem" tp="1" draggable="true">图片</div>
+      <div class="sitem" tp="2" draggable="true">文本</div>
+      <div class="sitem" tp="3" draggable="true"><i>w</i>按钮</div>
+    </div>
+    <div class="main-content" id="mainContent">
+      <div class="main-wrap" id="mainWrap">
+        <div class="main" id="main">
+          <!-- <div class="mitem">
+            <div class="mitem-hd">头部</div>
+            <div class="mitem-bd">内容</div>
+          </div>
+          <div class="mitem">
+            <div class="mitem-hd">头部</div>
+            <div class="mitem-bd">内容</div>
+          </div>
+          <div class="mitem">
+            <div class="mitem-hd">头部</div>
+            <div class="mitem-bd">内容</div>
+          </div> -->
+
+        </div>
+      </div>
+      
+
+
+    </div>
+
+  </div>
+
+  <script src="drag.js"></script>
+
+</body>
+</html>
