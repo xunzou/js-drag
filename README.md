@@ -1,6 +1,6 @@
 ## 拖拽事件
 
-drag-vue  用vue写的
+drag-mouse  用vue+鼠标事件
 
 
-drag-event js原生drag
+drag-event js原生drag+vue
