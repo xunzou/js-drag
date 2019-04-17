@@ -1,3 +1,6 @@
+## 拖拽事件
 
-# js-drag
-javascript drag demo
+drag-vue  用vue写的
+
+
+drag-event js原生drag

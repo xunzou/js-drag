@@ -3,7 +3,7 @@
  * @Date: 2019-03-11 11:15:44
  * @Desc: APP.js
  * @Last Modified by: ylq
- * @Last Modified time: 2019-03-15 14:25:18
+ * @Last Modified time: 2019-03-15 17:56:24
  */
 var vm = new Vue({
   el: '#app',
@@ -236,8 +236,12 @@ var vm = new Vue({
       let disY = ev.clientY - ot;
 
       let parentObj = this.getCurTar(target, 'module-item-bd');
+      let mfst = document.getElementById('mainFrame').scrollTop
+      console.log('---------------------------------------------')
+      console.log(239,document.getElementById('mainFrame').scrollTop)
+      console.log('---------------------------------------------')
       var itOL = parentObj.offsetLeft;
-      var itOT = parentObj.offsetTop;
+      var itOT = parentObj.offsetTop + mfst;
       var itW = parentObj.clientWidth
       var itH = parentObj.clientHeight
       document.onmousemove = ev => {
@@ -262,20 +266,23 @@ var vm = new Vue({
       // 获取left 和 top
       let {sl,st} = this.getLeftTop(ev,{itW, itH, disX, disY})
 
+      console.log(2690000000,sl,st)
+      console.log(2708888888,ev.clientX,ev.clientY,itOL, itOT, itW, itH,)
       let m = this.main;
       let mc = m[this.subItem.i].children
       // 如果鼠标是在外面
-      if(!(ev.clientX < itOL || ev.clientX > (itOL + itW) || ev.clientY < itOT || ev.clientY > (itOT + itH)) ){
-        if(target.className.indexOf('module-item-bd') == -1){
-          mc[this.subItem.si].sty = {
-            z:9999,
-            l:sl + 'px',
-            t:st + 'px',
-          }
-          m[this.subItem.i].children = mc
-          this.main = m
+      // if(!(ev.clientX < itOL || ev.clientX > (itOL + itW) || ev.clientY < itOT || ev.clientY > (itOT + itH)) ){
+      if(target.className.indexOf('module-item-bd') == -1){
+        console.log(2750000,sl,st)
+        mc[this.subItem.si].sty = {
+          z:9999,
+          l:sl + 'px',
+          t:st + 'px',
         }
+        m[this.subItem.i].children = mc
+        this.main = m
       }
+      // }
     },
 
     subMouseUp(ev,o){
@@ -285,8 +292,10 @@ var vm = new Vue({
       document.onmousemove = document.onmouseup = null;
       // agruemnts 
       let { itW, itH, disX, disY, zindex} = o;
+      console.log(itW, itH, disX, disY, zindex)
       // 获取left 和 top
       let {sl,st} = this.getLeftTop(ev,{itW, itH, disX, disY})
+      console.log(itW, itH, disX, disY, zindex,sl,st)
 
       this.main[this.subItem.i].children[this.subItem.si].sty.l = sl
       this.main[this.subItem.i].children[this.subItem.si].sty.t = st
@@ -306,7 +315,7 @@ var vm = new Vue({
       if(sl < 0) sl = 0
       if(st < 0) st = 0;
       if(sl > (itW - 50)) sl = itW - 50 
-      if(st > (itH - 50)) st = itH - 50 
+      if(st > (itH - 10)) st = itH - 10 
       return {sl,st}
     },
 
