@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-04-18 10:16:57
+ * @Last Modified time: 2019-04-18 10:40:53
  */
 // (function(window){
 // let win = window;
@@ -145,8 +145,9 @@ var vm = new Vue({
     },
     // 拖拽目标元素 在目标元素内部，放下拖拽的内容
     drop(event,index,sub) {
+      console.log(148,event,index,sub)
       if(!this.dragStatus) return false
-      console.log(event,index,sub)
+      console.log(150,event,index,sub)
       event.preventDefault();
       event.stopPropagation();
       event = event || window.event;
@@ -158,10 +159,16 @@ var vm = new Vue({
       let o = {tp,isFrame}
       if(sub){
         let ct = this.getCurTar(target,'mitem-bd')
+        let mw = document.getElementById('mainWrap');
+        let st = parseInt(mw.scrollTop)
+        console.log(164,st)
         console.log(event.clientX,ct.offsetLeft)
         console.log(event.clientY,ct.offsetTop)
         let l = event.clientX - ct.offsetLeft
-        let t = event.clientY - ct.offsetTop
+        let t = event.clientY - ct.offsetTop + st
+        console.log(166,l,t)
+        if(l< 0) l = 0
+        if(t< 0) t = 0
         o.l = l
         o.t = t
       }
@@ -172,63 +179,70 @@ var vm = new Vue({
 
     insertData(o,index,sub){
       if(!this.dragStatus) return false
+      console.log(176,o,index,sub)
       let {tp,isFrame,l,t} = o
-      console.log(163,tp,isFrame,index,sub)
+      console.log(178,tp,isFrame,index,sub)
       let md = this.md;
+      let item = {
+        isFrame,
+        sd:[]
+      }
       // 一级
       if(!sub){
-        let item = {
-          isFrame,
-          sd:[]
-        }
-        if(isFrame != 1){
-          let sd = []
-          sd.push({tp,l,t})
-          item.sd = sd
+        if(isFrame == 0){
+          // let sd = []
+          item.sd.push({tp,l,t})
+          // item.sd = sd
         }
         md.splice(index, 0, item)
       } else {
+        console.log(193,index)
         // 二级
-        if(isFrame != 1){
+        if(isFrame == 0){
+          console.log(196,index)
           let mysd = md[index].sd || []
           mysd.push({tp,l,t})
+        }
+        // 如果是框架
+        if(isFrame == 1){
+          md.splice(index, 0, item)
         }
       }
       this.md = md
       console.log(this.md)
     },
     // 中间大的子项目拖拽事件
-    itemSortDragstart(event,index){
-      console.log(20222222)
-      event = event || window.event;
-      this.sortEle = index;
-      this.sortStatus = true;
-      event.preventDefault();
-      // event.stopPropagation();
-    },
-    // 中间大的子项目拖拽事件
-    itemSortDragend(event,index){
-      console.log(202333333333)
-      event = event || window.event;
-      this.sortStatus = false;// 拖放结束还原拖动元素的背景
-      // event.preventDefault();
-    },
-    itemSortDragenter(event,index){
-      console.log('itemSortDragenter')
-      event = event || window.event;
-      if(!this.sortStatus) return false
+    // itemSortDragstart(event,index){
+    //   console.log(20222222)
+    //   event = event || window.event;
+    //   this.sortEle = index;
+    //   this.sortStatus = true;
+    //   event.preventDefault();
+    //   // event.stopPropagation();
+    // },
+    // // 中间大的子项目拖拽事件
+    // itemSortDragend(event,index){
+    //   console.log(202333333333)
+    //   event = event || window.event;
+    //   this.sortStatus = false;// 拖放结束还原拖动元素的背景
+    //   // event.preventDefault();
+    // },
+    // itemSortDragenter(event,index){
+    //   console.log('itemSortDragenter')
+    //   event = event || window.event;
+    //   if(!this.sortStatus) return false
 
-    },
-    itemSortDragover(event){
-      event.preventDefault()
-      event.stopPropagation();
-    },
-    itemSortDragleave(event,index){
-      console.log('itemSortDragleave')
-      event = event || window.event;
-      if(!this.sortStatus) return false
+    // },
+    // itemSortDragover(event){
+    //   event.preventDefault()
+    //   event.stopPropagation();
+    // },
+    // itemSortDragleave(event,index){
+    //   console.log('itemSortDragleave')
+    //   event = event || window.event;
+    //   if(!this.sortStatus) return false
 
-    },
+    // },
 
     // 中间子项目内小项目拖拽事件
     subDragstart(event,index,sub){
@@ -245,7 +259,7 @@ var vm = new Vue({
       console.log(ct,l,t,disX,disY)
       this.subObj = {disX,disY}
       this.subStatus = true
-      event.stopPropagation();
+      // event.stopPropagation();
     },
     subDragend(event,index,i) {
       let {disX,disY} = this.subObj
@@ -266,7 +280,7 @@ var vm = new Vue({
       this.md[index].sd[i].t = nt
       // this.subObj
       this.subStatus = false
-      event.stopPropagation();
+      // event.stopPropagation();
     },
 
 
