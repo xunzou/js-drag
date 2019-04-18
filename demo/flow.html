@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            #flow {
+                list-style: none;
+                margin: 0 auto;
+                position: relative;
+            }
+
+            #flow li {
+                position: absolute;
+                background-color: #CCCCCC;
+                font-size: 50px;
+                width: 200px;
+                transition: all 0.5s;
+            }
+        </style>
+    </head>
+
+    <body>
+        <ul id="flow">
+            <!--<li>1</li>-->
+        </ul>
+
+
+
+
+        <script type="text/javascript">
+            function ranH(min, max) {
+                return parseInt(Math.random() * (max - min + 1)) + min;
+            }
+            var flow = document.getElementById("flow");
+            // 左边距
+            var leftSpace = 10;
+            // 间距
+            var paddingSpace = 10;
+            //高度数组 保存每个li的高度
+            var hs = [];
+            //布局函数
+            //bol为真时 创建li
+            //bol为假时 更新li位置
+            function layout(bol) {
+                //获取所有的li 用于大小改变时 更新布局
+                var lis = document.getElementsByTagName("li");
+                var cols = parseInt(document.documentElement.clientWidth / 200);
+                //ul宽度 跟随宽度一起变化
+                flow.style.width = cols * 200 + 10 * (cols - 1) + 20;
+                //初始化列高数组
+                var arrH = [];
+                for (var i = 0; i < cols; i++) {
+                    arrH[i] = 10;
+                }
+
+                function createLi(index) {
+                    //获取已有的li或者新建
+                    var li = lis[index] || document.createElement("li");
+                    li.innerHTML = index;
+                    //从数组中获取高度或者随机高度
+                    var h = hs[index] || ranH(100, 300);
+                    li.style.height = h + "px";
+                    if (bol) {
+                        hs.push(h);
+                    } //求最短列
+                    var minH = arrH[0];
+                    var minI = 0;
+                    for (var i = 0; i < cols; i++) {
+                        if (minH > arrH[i]) {
+                            minH = arrH[i];
+                            minI = i;
+                        }
+                    }
+                    //设置left
+                    var l = leftSpace + (200 + paddingSpace) * minI;
+                    li.style.left = l + "px";
+                    //设置top
+                    li.style.top = arrH[minI] + "px";
+                    //添加
+                    bol && flow.appendChild(li);
+                    //                alert(li.offsetLeft+"~"+li.offsetTop+"~"+li.offsetWidth+"~"+li.offsetHeight);
+                    //更新高度
+                    arrH[minI] = arrH[minI] + li.offsetHeight + paddingSpace;
+                }
+                for (var i = 0; i < 20; i++) {
+                    createLi(i);
+                }
+            }
+            //创建
+            layout(true);
+            window.onresize = function() {
+                //更新
+                layout(false);
+            }
+        </script>
+    </body>
+</html>
