@@ -101,7 +101,7 @@
               <div class="mitem-placeholder" v-show="dragStatus" @dragover="dragover" @drop="drop($event,index)">{{index}}</div>
               <div class="mitem-hd">头部{{index}}</div>
               <div class="mitem-bd" @dragover="dragover" @drop="drop($event,index,1)">
-                <div v-if="item.sd" v-for="(it,i) in item.sd" :style="{left:(it.l? it.l + 'px' : 0),top:(it.t? it.t + 'px' : 0)}" :key="i" draggable="true" @dragstart="subDragstart" @dragend="subDragend($event,index,i)" class="sub-item">
+                <div v-if="item.sd" v-for="(it,i) in item.sd" :style="{left:(it.l? it.l + 'px' : 0),top:(it.t? it.t + 'px' : 0),zIndex:(i+5)}" :key="i" draggable="true" @dragstart="subDragstart" @dragend="subDragend($event,index,i)" class="sub-item">
                     <template v-if="it.tp == 1">
                       图片{{it.tp}}
                     </template>
