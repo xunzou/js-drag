@@ -13,6 +13,7 @@
     .wrap{
       display: flex;
       justify-content:center;
+      padding: 50px 0;
     }
     .sidebar{
       height: 500px;
@@ -33,6 +34,7 @@
       width: 375px;
       margin: 0 50px;
       background: #c8c8c8;
+      border:1px solid #c8c8c8;
       display: flex;
       overflow: hidden;
       flex-direction:column;
@@ -50,7 +52,7 @@
 
     .mitem{
       width: 100%;
-      min-height: 100px;
+      min-height: 150px;
     }    
     .mitem-hd{
       height: 50px;
@@ -60,21 +62,61 @@
     }
     
     .mitem-bd{
-      min-height: 50px;
+      min-height: 300px;
       background: #FFF;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mitem-hidden .mitem-bd{
+      display: none;
+    }
+
+    .sub-item{
+      position: absolute;
+    }
+
+    .mitem-placeholder{
+      background: #d2e0ff;
+      border:1px dotted #3e7afa;
+      height: 50px;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" id="app">
     <div class="sidebar" id="sidebar">
-      <div class="sitem" tp="1" draggable="true">图片</div>
-      <div class="sitem" tp="2" draggable="true">文本</div>
-      <div class="sitem" tp="3" draggable="true"><i>w</i>按钮</div>
+      <div class="sitem" tp="1" issuper="0" draggable="true" @dragstart="dragstart" @dragend="dragend">图片</div>
+      <div class="sitem" tp="2" issuper="0" draggable="true" @dragstart="dragstart" @dragend="dragend">文本</div>
+      <div class="sitem" tp="3" issuper="0" draggable="true" @dragstart="dragstart" @dragend="dragend"><i>w</i>按钮</div>
+      <div class="sitem" tp="4" issuper="1" draggable="true" @dragstart="dragstart" @dragend="dragend">框架</div>
     </div>
     <div class="main-content" id="mainContent">
       <div class="main-wrap" id="mainWrap">
-        <div class="main" id="main">
+        <div class="main" id="main" @dragover="dragover" @drop="drop($event,md.length)">
+            <div v-for="(item,index) in md" :key="index" class="mitem" :class="sortStatus ? 'mitem-hidden' : ''" >
+              <div class="mitem-placeholder" v-show="dragStatus" @dragover="dragover" @drop="drop($event,index)">{{index}}</div>
+              <div class="mitem-hd">头部{{index}}</div>
+              <div class="mitem-bd" @dragover="dragover" @drop="drop($event,index,1)">
+                <div v-if="item.sd" v-for="(it,i) in item.sd" :style="{left:(it.l? it.l + 'px' : 0),top:(it.t? it.t + 'px' : 0)}" :key="i" draggable="true" @dragstart="subDragstart" @dragend="subDragend($event,index,i)" class="sub-item">
+                    <template v-if="it.tp == 1">
+                      图片{{it.tp}}
+                    </template>
+                    <template v-if="it.tp == 2">
+                      文本{{it.tp}}
+                    </template>
+                    <template v-if="it.tp == 3">
+                      <div>
+                          <img src="https://img14.360buyimg.com/n0/jfs/t1/22025/36/2059/129213/5c18e910E694dc2f7/8d70cbd502121418.jpg" width="200" class="image">
+                          w按钮{{it.tp}}
+                      </div>
+                    </template>
+                </div>
+
+              </div>
+            </div>
+            <div class="mitem-placeholder" v-show="dragStatus" @dragover="dragover" @drop="drop($event,md.length)">{{md.length}}</div>
+
           <!-- <div class="mitem">
             <div class="mitem-hd">头部</div>
             <div class="mitem-bd">内容</div>
@@ -97,6 +139,8 @@
 
   </div>
 
+  <!-- 引入VUE -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
   <script src="drag.js"></script>
 
 </body>
