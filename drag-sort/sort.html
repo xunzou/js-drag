@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Drag-sort</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .sort {
+      width: 300px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      margin: 50px auto;
+      background: #fcfcfc;
+    }
+    .sort-item {
+      margin: 0 0 10px;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      background: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>未完成……</h1>
+  <div class="sort" id="sortWrap">
+    <div class="sort-item" draggable="true" ondragstart="handleDragstart" ondragend="handleDragend">1</div>
+    <div class="sort-item" draggable="true" ondragstart="handleDragstart" ondragend="handleDragend">2</div>
+    <div class="sort-item" draggable="true" ondragstart="handleDragstart" ondragend="handleDragend">3</div>
+    <div class="sort-item" draggable="true" ondragstart="handleDragstart" ondragend="handleDragend">4</div>
+
+  </div>
+
+
+  <script>
+      var dragStatus = false
+      var handleDragstart = function (e) {
+        e = e || window.event;
+        alert(1)
+        console.log('start')
+        dragStatus = true
+      }
+      var handleDragend = function (e) {
+        e = e || window.event;
+        alert(2)
+        console.log('end')
+        dragStatus = false
+      }
+  
+      window.onload = function () {
+        
+      }
+    </script>
+</body>
+
+</html>
