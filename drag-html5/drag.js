@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-04-18 11:39:20
+ * @Last Modified time: 2019-04-18 12:19:02
  */
 // (function(window){
 // let win = window;
@@ -273,7 +273,11 @@ var vm = new Vue({
       let target = event.target || event.srcElement
       let ct = this.getCurTar(target,'mitem-bd')
       let oh = ct.offsetHeight
-      if(nl< 0 || nt< 0 || nl > 375 || nt > oh) {nl = l;nt = t}
+      //
+      if(nl< 0 || nt< 0 || nl > 375 || nt > oh) {
+        nl = l;
+        nt = t;
+      }
       // if(nt > oh) nt = t
       
       this.md[index].sd[i].l = nl
