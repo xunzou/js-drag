@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-04-18 10:40:53
+ * @Last Modified time: 2019-04-18 11:39:20
  */
 // (function(window){
 // let win = window;
@@ -257,24 +257,24 @@ var vm = new Vue({
       var disX = event.offsetX - l;
       var disY = event.offsetY - t;
       console.log(ct,l,t,disX,disY)
-      this.subObj = {disX,disY}
+      this.subObj = {l,t,disX,disY}
       this.subStatus = true
       // event.stopPropagation();
     },
     subDragend(event,index,i) {
-      let {disX,disY} = this.subObj
+      let {l,t,disX,disY} = this.subObj
       event = event || window.event;
       console.log('end拖动结束');
       let nl = event.offsetX - disX
       let nt = event.offsetY - disY
-      if(nl< 0) nl = 0
-      if(nt< 0) nt = 0
+      // if(nl< 0 || nt< 0) {nl = l;nt = t}
+      // if(nt< 0) nt = t
       //如果大于最大高度/最大宽度
       let target = event.target || event.srcElement
       let ct = this.getCurTar(target,'mitem-bd')
       let oh = ct.offsetHeight
-      if(nl > 375) nl = 350
-      if(nt > oh) nt = oh - 25
+      if(nl< 0 || nt< 0 || nl > 375 || nt > oh) {nl = l;nt = t}
+      // if(nt > oh) nt = t
       
       this.md[index].sd[i].l = nl
       this.md[index].sd[i].t = nt
