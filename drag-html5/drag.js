@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-04-18 12:19:02
+ * @Last Modified time: 2019-04-28 17:34:29
  */
 // (function(window){
 // let win = window;
@@ -76,6 +76,9 @@ var vm = new Vue({
       sortStatus: false,
       subObj:{},
       subStatus: false,
+      //滚蛋条的事情
+      curMouseY:undefined,
+      timer: undefined,
     }
   },
   created: function () {
@@ -142,6 +145,10 @@ var vm = new Vue({
     dragover(event) {
       event.preventDefault();
       event.stopPropagation();
+      //这下面的事件都是为了滚动而弄得
+      let my = event.clientY
+      this.curMouseY = my
+      this.scrollEvent()
     },
     // 拖拽目标元素 在目标元素内部，放下拖拽的内容
     drop(event,index,sub) {
@@ -175,6 +182,10 @@ var vm = new Vue({
       // console.log('drop', tp)
       this.insertData(o,index,sub)
       this.dragStatus = false
+      // 清除定时任务
+      this.curMouseY = undefined;
+      clearInterval(this.timer)
+      this.timer = undefined;
     },
 
     insertData(o,index,sub){
@@ -287,6 +298,27 @@ var vm = new Vue({
       // event.stopPropagation();
     },
 
+    // 滚动条事件
+    scrollEvent(){
+      if(this.curMouseY > 490) {
+        clearInterval(this.timer)
+        let mainWrap = document.getElementById('mainWrap')
+        let st = mainWrap.scrollTop
+        let ch = mainWrap.clientHeight
+        let sh = mainWrap.scrollHeight
+        console.log(308,'-------------',st,ch,sh)
+        this.timer = setInterval(function(){
+          mainWrap.scrollTop += 20
+          console.log(mainWrap.scrollTop)
+          if(mainWrap.scrollTop >= ch + sh - 20){
+            clearInterval(this.timer)
+          }
+        },50)
+      } else {
+        clearInterval(this.timer)
+        this.curMouseY = undefined;
+      }
+    },
 
 
 

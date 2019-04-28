@@ -95,7 +95,7 @@
       <div class="sitem" tp="4" issuper="1" draggable="true" @dragstart="dragstart" @dragend="dragend">框架</div>
     </div>
     <div class="main-content" id="mainContent">
-      <div class="main-wrap" id="mainWrap">
+      <div class="main-wrap" id="mainWrap" @dragover="dragover">
         <div class="main" id="main" @dragover="dragover" @drop="drop($event,md.length)">
             <div v-for="(item,index) in md" :key="index" class="mitem" :class="sortStatus ? 'mitem-hidden' : ''" >
               <div class="mitem-placeholder" v-show="dragStatus" @dragover="dragover" @drop="drop($event,index)">{{index}}</div>
