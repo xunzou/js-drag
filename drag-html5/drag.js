@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-04-28 17:34:29
+ * @Last Modified time: 2019-04-28 17:56:06
  */
 // (function(window){
 // let win = window;
@@ -127,6 +127,10 @@ var vm = new Vue({
     dragend(event) {
       console.log('end拖动结束');
       this.dragStatus = false
+      // 清除定时任务
+      this.curMouseY = undefined;
+      clearInterval(this.timer)
+      this.timer = undefined;
     },
     // 拖拽目标元素 进入 
     // dragenter(event) {
@@ -300,7 +304,7 @@ var vm = new Vue({
 
     // 滚动条事件
     scrollEvent(){
-      if(this.curMouseY > 490) {
+      if(this.curMouseY > 490 && this.dragStatus) {
         clearInterval(this.timer)
         let mainWrap = document.getElementById('mainWrap')
         let st = mainWrap.scrollTop
