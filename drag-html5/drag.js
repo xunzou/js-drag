@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-05-08 14:38:31
+ * @Last Modified time: 2019-05-08 15:02:36
  */
 // (function(window){
 // let win = window;
@@ -300,24 +300,23 @@ var vm = new Vue({
       this.subStatus = true
       event.dataTransfer.setData("itemindex",`${index}`);
       // event.dataTransfer.setData('text/plain', 'data');
-      // event.stopPropagation();
+      event.stopPropagation();
     },
     subDragend(event) {
-      console.log(290,event)
-      console.log(293,event, window.event)
+      event = this.subEvent || event;
       let {l,t,disX,disY,index,i} = this.subObj
       console.log(310,l,t,disX,disY,index,i)
-      event = this.subEvent || event;
       console.log(311,event)
       console.log('sub-end拖动结束',event);
       let nl = event.offsetX - disX
       let nt = event.offsetY - disY
       
+      let target = event.target || event.srcElement
       // 如果是firefox浏览器
       if(this.checkBrower() == 'FF'){
         nl = event.layerX - disX;
         nt = event.layerY - disY;
-        if(target.className.indexOf('mitem-bd') == -1 || target.className.indexOf('sub-item') == -1 ){
+        if(target.className.indexOf('mitem-bd') == -1 && target.className.indexOf('sub-item') == -1 ){
           let curSubTarget = this.getCurTar(target,'sub-item')
           let subL = parseInt(curSubTarget.style.left)
           let subT = parseInt(curSubTarget.style.top)
@@ -329,7 +328,6 @@ var vm = new Vue({
 
       // 获取当前容器父容器
       //如果大于最大高度/最大宽度
-      let target = event.target || event.srcElement
       let ct = this.getCurTar(target,'mitem-bd')
       let oh = ct.offsetHeight
       let ow = ct.offsetWidth
@@ -345,7 +343,7 @@ var vm = new Vue({
       // this.subObj
       this.subStatus = false
       this.subEvent = undefined;
-      // event.stopPropagation();
+      event.stopPropagation();
     },
 
     // 滚动条事件
