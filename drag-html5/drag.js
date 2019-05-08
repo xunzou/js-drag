@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-05-08 14:37:36
+ * @Last Modified time: 2019-05-08 14:38:31
  */
 // (function(window){
 // let win = window;
@@ -334,7 +334,6 @@ var vm = new Vue({
       let oh = ct.offsetHeight
       let ow = ct.offsetWidth
       console.log(292,'当前容器高度',oh,'当前容器宽度',ow)
-      //
       if(nl< 0 || nt< 0 || nl > ow || nt > oh) {
         nl = l;
         nt = t;
