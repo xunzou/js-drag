@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-05-08 09:56:47
+ * @Last Modified time: 2019-05-08 14:37:36
  */
 // (function(window){
 // let win = window;
@@ -76,6 +76,10 @@ var vm = new Vue({
       sortStatus: false,
       subObj:{},
       subStatus: false,
+      //sub drag
+      itemindex:0,
+      itemsubindex:0,
+      
       //滚蛋条的事情
       curMouseY:undefined,
       timer: undefined,
@@ -156,12 +160,16 @@ var vm = new Vue({
     },
     // 拖拽目标元素 在目标元素内部，放下拖拽的内容
     drop(event,index,sub) {
-      console.log(148,event,index,sub)
-      if(!this.dragStatus) return false
-      console.log(150,event,index,sub)
+      event = event || window.event;
       event.preventDefault();
       event.stopPropagation();
-      event = event || window.event;
+      console.log(148,event,index,sub)
+      if(this.subStatus && this.checkBrower() == 'FF'){
+        console.log(1234567,event)
+        this.subEvent = event;
+      }
+      if(!this.dragStatus) return false
+      console.log(150,event,index,sub)
       let target = event.target || event.srcElement
       console.log(999,target)
       console.log('drop拖动元素在目标元素内释放时');
@@ -258,39 +266,76 @@ var vm = new Vue({
     //   if(!this.sortStatus) return false
 
     // },
+    checkBrower(){
+      let ua = navigator.userAgent
+      if(ua.indexOf('Firefox') >-1){
+        return 'FF'
+      } else {
+        return false
+      }
+    },
 
     // 中间子项目内小项目拖拽事件
-    subDragstart(event,index,sub){
+    subDragstart(event){
+      console.log(264,event, window.event)
       event = event || window.event;
       console.log(event);
-      console.log('start开始');
+      console.log('sub-start开始');
       let target = event.target || event.srcElement
       console.log(target)
       let ct = this.getCurTar(target,'sub-item')
+      let index = ct.getAttribute('index')
+      let i = ct.getAttribute('subindex')
       let l = parseInt(ct.style.left)
       let t = parseInt(ct.style.top)
       var disX = event.offsetX - l;
       var disY = event.offsetY - t;
-      console.log(ct,l,t,disX,disY)
-      this.subObj = {l,t,disX,disY}
+      if(this.checkBrower() == 'FF'){
+        disX = event.layerX;
+        disY = event.layerY;
+        console.log(233333,disX,disY)
+      }
+      console.log(ct,l,t,disX,disY,index,i)
+      this.subObj = {l,t,disX,disY,index,i}
       this.subStatus = true
-      event.dataTransfer.setData("a"," ");
+      event.dataTransfer.setData("itemindex",`${index}`);
+      // event.dataTransfer.setData('text/plain', 'data');
       // event.stopPropagation();
     },
-    subDragend(event,index,i) {
-      let {l,t,disX,disY} = this.subObj
-      event = event || window.event;
-      console.log('end拖动结束');
+    subDragend(event) {
+      console.log(290,event)
+      console.log(293,event, window.event)
+      let {l,t,disX,disY,index,i} = this.subObj
+      console.log(310,l,t,disX,disY,index,i)
+      event = this.subEvent || event;
+      console.log(311,event)
+      console.log('sub-end拖动结束',event);
       let nl = event.offsetX - disX
       let nt = event.offsetY - disY
-      // if(nl< 0 || nt< 0) {nl = l;nt = t}
-      // if(nt< 0) nt = t
+      
+      // 如果是firefox浏览器
+      if(this.checkBrower() == 'FF'){
+        nl = event.layerX - disX;
+        nt = event.layerY - disY;
+        if(target.className.indexOf('mitem-bd') == -1 || target.className.indexOf('sub-item') == -1 ){
+          let curSubTarget = this.getCurTar(target,'sub-item')
+          let subL = parseInt(curSubTarget.style.left)
+          let subT = parseInt(curSubTarget.style.top)
+          nl = (event.layerX + subL) - disX;
+          nt = (event.layerY + subT) - disY;
+        }
+        console.log(319,nl,nt)
+      }
+
+      // 获取当前容器父容器
       //如果大于最大高度/最大宽度
       let target = event.target || event.srcElement
       let ct = this.getCurTar(target,'mitem-bd')
       let oh = ct.offsetHeight
+      let ow = ct.offsetWidth
+      console.log(292,'当前容器高度',oh,'当前容器宽度',ow)
       //
-      if(nl< 0 || nt< 0 || nl > 375 || nt > oh) {
+      if(nl< 0 || nt< 0 || nl > ow || nt > oh) {
         nl = l;
         nt = t;
       }
@@ -300,6 +345,7 @@ var vm = new Vue({
       this.md[index].sd[i].t = nt
       // this.subObj
       this.subStatus = false
+      this.subEvent = undefined;
       // event.stopPropagation();
     },
 
@@ -337,8 +383,6 @@ var vm = new Vue({
 
   },
 })
-
-
 
 
 
