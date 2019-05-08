@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-04-28 17:56:06
+ * @Last Modified time: 2019-05-08 09:56:47
  */
 // (function(window){
 // let win = window;
@@ -274,6 +274,7 @@ var vm = new Vue({
       console.log(ct,l,t,disX,disY)
       this.subObj = {l,t,disX,disY}
       this.subStatus = true
+      event.dataTransfer.setData("a"," ");
       // event.stopPropagation();
     },
     subDragend(event,index,i) {
