@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-05-08 15:02:36
+ * @Last Modified time: 2019-05-10 15:07:25
  */
 // (function(window){
 // let win = window;
@@ -175,7 +175,7 @@ var vm = new Vue({
       console.log('drop拖动元素在目标元素内释放时');
       let tp = event.dataTransfer.getData('tp')
       let isFrame = event.dataTransfer.getData('issuper')
-      let o = {tp,isFrame}
+      let o = {tp,isFrame,l:0,t:0,}
       if(sub){
         let ct = this.getCurTar(target,'mitem-bd')
         let mw = document.getElementById('mainWrap');
