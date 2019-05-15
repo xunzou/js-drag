@@ -3,7 +3,7 @@
  * @Date: 2019-04-17 13:21:46
  * @Desc: Drag
  * @Last Modified by: ylq
- * @Last Modified time: 2019-05-15 14:37:33
+ * @Last Modified time: 2019-05-15 15:51:24
  */
 // (function(window){
 // let win = window;
@@ -381,7 +381,6 @@ var vm = new Vue({
     },
 
     resizeMousemove(event) {
-      console.log(1)
       event = event || window.event;
       event.preventDefault();
       let {box,fa,pos} = this.resizeObj;
