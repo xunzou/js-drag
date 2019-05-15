@@ -4,9 +4,177 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>div四面八方拖拽</title>
+  <title>Drag</title>
+  <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .wrap{
+      display: flex;
+      justify-content:center;
+      padding: 50px 0;
+    }
+    .sidebar{
+      height: 500px;
+      width: 300px;
+      margin: 0 50px;
+      background: #f5f5f5;
+    }
+    .sitem{
+      display: inline-block;
+      vertical-align: top;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #3e7afa;
+      border-radius: 10px;
+    }
+    .main-content {
+      height: 500px;
+      width: 510px;
+      margin: 0 50px;
+      /* background: #c8c8c8;
+      border:1px solid #c8c8c8; */
+      display: flex;
+      overflow: hidden;
+      flex-direction:column;
+    }
+    .main-wrap{
+      width: 400px;
+      height: 550px;
+      overflow-x:hidden;
+      overflow: auto;
+    }
+    .main {
+      width: 375px;
+      min-height: 500px;
+      background: #c8c8c8;
+      
+    }
+
+
+    .mitem{
+      width: 100%;
+      min-height: 150px;
+    }    
+    .mitem-hd{
+      height: 50px;
+      line-height: 50px;
+      background: #ffa053;
+      color:#3e7afa;
+    }
+    
+    .mitem-bd{
+      min-height: 300px;
+      background: #FFF;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mitem-hidden .mitem-bd{
+      display: none;
+    }
+
+    .sub-item{
+      position: absolute;
+      border:1px dotted transparent;
+    }
+
+    .sub-item .right-down{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: 6px;
+      width: 6px;
+      display: none;
+      z-index: 99;
+      background: #3e7afa;
+    }
+
+    .sub-item:hover{
+      border-color: #3e7afa;
+    }
+
+    .sub-item:hover .right-down{
+      display: block;
+    }
+
+    .mitem-placeholder{
+      background: #d2e0ff;
+      border:1px dotted #3e7afa;
+      height: 50px;
+    }
+  </style>
 </head>
 <body>
-  
+  <div class="wrap" id="app">
+    <div class="sidebar" id="sidebar">
+      <div class="sitem" tp="1" issuper="0" draggable="true" @dragstart="dragstart" @dragend="dragend">图片</div>
+      <div class="sitem" tp="2" issuper="0" draggable="true" @dragstart="dragstart" @dragend="dragend">文本</div>
+      <div class="sitem" tp="3" issuper="0" draggable="true" @dragstart="dragstart" @dragend="dragend"><i>w</i>按钮</div>
+      <div class="sitem" tp="4" issuper="1" draggable="true" @dragstart="dragstart" @dragend="dragend">框架</div>
+    </div>
+    <div class="main-content" id="mainContent">
+      <div class="main-wrap" id="mainWrap" @dragover="dragover">
+        <div class="main" id="main" @dragover="dragover" @drop="drop($event,md.length)">
+            <div v-for="(item,index) in md" :key="index" class="mitem" :class="sortStatus ? 'mitem-hidden' : ''" >
+              <div class="mitem-placeholder" v-show="dragStatus" @dragover="dragover" @drop="drop($event,index)">{{index}}</div>
+              <div class="mitem-hd">头部{{index}}</div>
+              <div class="mitem-bd" @dragover="dragover" @drop="drop($event,index,1)">
+                <div v-if="item.sd" :subindex="i" :index="index" v-for="(it,i) in item.sd" :style="{left:(it.l? it.l + 'px' : 0),top:(it.t? it.t + 'px' : 0),zIndex:(i+5)}" :key="i" draggable="true" @dragstart="subDragstart" @dragend="subDragend" class="sub-item">
+                  <div id="rightDown" class="right-down" @mousedown.stop="resizeMousedown"></div>  
+                  
+                  <template v-if="it.tp == 1">
+                    图片{{it.tp}}
+                  </template>
+                  <template v-if="it.tp == 2">
+                    文本{{it.tp}}
+                  </template>
+                  <template v-if="it.tp == 3">
+                    <div>
+                        <img src="https://img14.360buyimg.com/n0/jfs/t1/22025/36/2059/129213/5c18e910E694dc2f7/8d70cbd502121418.jpg" width="200" class="image">
+                        w按钮{{it.tp}}
+                    </div>
+                  </template>
+
+
+                </div>
+
+              </div>
+            </div>
+            <div class="mitem-placeholder" v-show="dragStatus" @dragover="dragover" @drop="drop($event,md.length)">{{md.length}}</div>
+
+          <!-- <div class="mitem">
+            <div class="mitem-hd">头部</div>
+            <div class="mitem-bd">内容</div>
+          </div>
+          <div class="mitem">
+            <div class="mitem-hd">头部</div>
+            <div class="mitem-bd">内容</div>
+          </div>
+          <div class="mitem">
+            <div class="mitem-hd">头部</div>
+            <div class="mitem-bd">内容</div>
+          </div> -->
+
+        </div>
+      </div>
+      
+
+
+    </div>
+
+  </div>
+
+  <!-- 引入VUE -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+  <script>
+    document.body.ondrop = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+  </script>
+  <script src="drag.js"></script>
+
 </body>
 </html>
