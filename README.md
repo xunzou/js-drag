@@ -9,6 +9,6 @@
 
 [drag-event js原生drag+vue](/drag-html5/drag.html)
 
-[react-hooks](/react-hooks)
+[react-hooks](/react-hooks/)
 
-[react-router](/react-router-example)
+[react-router](/react-router-example/)
