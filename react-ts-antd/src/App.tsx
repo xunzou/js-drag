@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Switch, Route ,useHistory } from 'react-router-dom';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Login from './pages/login'
 import Layout from './layout/layout'
 import error from './pages/404'

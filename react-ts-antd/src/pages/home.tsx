@@ -1,4 +1,4 @@
-import React ,{useReducer} from 'react';
+import React from 'react';
 
 function Home():JSX.Element {
   // const [state,dispatch] = useReducer(reducer, initState)

@@ -1,0 +1,17 @@
+.login {
+  width: 360px;
+  margin: 100px auto;
+
+}
+.login h1{
+  text-align: center;
+}
+.login  .ant-tabs .ant-tabs-bar {
+  margin-bottom: 24px;
+  text-align: center;
+  border-bottom: 0;
+}
+
+.login-form-forgot{
+  float: right;
+}
