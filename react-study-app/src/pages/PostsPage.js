@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
-import {fetchPosts} from '../actions/postsActions';
+import {fetchPosts} from '../store/actions/postsActions';
 import {Post } from '../components/Post';
 
 
