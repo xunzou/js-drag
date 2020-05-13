@@ -14,7 +14,7 @@ const PostsPage = ({dispatch,loading,posts,hasErrors}) => {
   const renderPosts = () => {
     if(loading) return <p>加载中……</p>
     if(hasErrors) return <p>靠，出错了</p>
-    return posts.map( post => <Post key={post.id} post={post} />)
+    return posts.map( post => <Post key={post.id} post={post} isList />)
   }
 
   return (

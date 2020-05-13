@@ -8,9 +8,9 @@ export const getPost = () => ({
   type: GET_POST,
 });
 
-export const getPostSuccess = posts => ({
+export const getPostSuccess = post => ({
   type: GET_POST_SUCCESS,
-  payload: posts,
+  payload: post,
 });
 
 export const getPostFailure = () => ({
@@ -18,12 +18,12 @@ export const getPostFailure = () => ({
 });
 
 
-export function fetchPosts(){
+export function fetchPost(id){
   return async dispatch => {
     dispatch(getPost())
 
     try {
-      const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+      const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
       const data = await res.json()
       dispatch(getPostSuccess(data))
     } catch(error) {

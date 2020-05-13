@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 
 import DashboardPage from './pages/DashboardPage'
 import PostsPage from './pages/PostsPage'
+import Post from './pages/Post'
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={DashboardPage} />
         <Route exact path="/posts" component={PostsPage} />
+        <Route exact path="/post:id" component={Post} />
         <Redirect to="/" />
       </Switch>
     </Router>

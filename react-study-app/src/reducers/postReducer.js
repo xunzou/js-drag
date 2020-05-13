@@ -1,7 +1,7 @@
 import * as actions from '../actions/postActions';
 
 export const initialState = {
-  posts:{},
+  post:{},
   loading: false,
   hasErrors: false,
 }
@@ -12,7 +12,7 @@ export default function postsReducer( state = initialState,action){
       return {...state,loading:true,}
 
     case actions.GET_POST_SUCCESS:
-      return {posts: action.payload ,loading:false,hasErrors:false}
+      return {post: action.payload ,loading:false,hasErrors:false}
 
     case actions.GET_POST_FAILURE:
       return {...state,loading:false,hasErrors:true}
