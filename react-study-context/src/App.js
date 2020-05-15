@@ -2,7 +2,7 @@ import React from 'react'
 import HomePage from './pages/HomePage'
 import HomePage2 from './pages/HomePage2'
 import HomePage3 from './pages/HomePage3'
-import {UseProvider} from './UseContext'
+import {UserProvider} from './UserContext'
 
 export default function App(){
   const user = {
@@ -10,7 +10,7 @@ export default function App(){
     loginedIn: true,
   }
   return (
-    <UseProvider value={user}>
+    <UserProvider value={user}>
       <h1>访问Context</h1>
       <h2>Class中两种方式访问</h2>
       <h3>Style 1</h3>
@@ -20,6 +20,6 @@ export default function App(){
       <h2>Function访问</h2>
       <HomePage3 />
       
-    </UseProvider>
+    </UserProvider>
   )
 }

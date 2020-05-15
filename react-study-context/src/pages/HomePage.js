@@ -1,8 +1,8 @@
 import React from 'react';
-import UseContext from '../UseContext';
+import UserContext from '../UserContext';
 
 class HomePage extends React.Component {
-  static contextType = UseContext;
+  static contextType = UserContext;
   constructor(props){
     super(props)
     this.state = {
@@ -11,8 +11,8 @@ class HomePage extends React.Component {
   }
 
   componentDidMount(){
-    const user = this.context
-    console.log(user)
+    const {user} = this.context
+    console.log(15,user)
     console.table(user)
     this.setState({
       user,

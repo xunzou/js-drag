@@ -1,16 +1,20 @@
 import React from 'react';
-import {UseConsumer} from '../UseContext';
+import UserContext from '../UserContext';
 
 class HomePage2 extends React.Component {
-
+  static contextType = UserContext
   render(){
+    const {user,setUser} = this.context
     return (
-      <UseConsumer>
-        { props => {
-            return <div>{props.name}</div>
+      <div>
+        <button onClick={
+          () => {
+            const newUser = {name: '冰剑',loginedIn:true,}
+            setUser(newUser)
           }
-        }
-      </UseConsumer>
+        }>更新用户</button>
+        <div>当前用户：{user.name}</div>
+      </div>
     )
   }
   
