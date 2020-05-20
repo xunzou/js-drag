@@ -6,13 +6,13 @@ import error from './pages/404'
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Switch>
         <Route exact={true} path={"/login"} component={Login} />
         <Route path={"/"} component={Layout} />
         <Route path={"*"} component={error} />
       </Switch>
-    </div>
+    </>
   );
 }
 

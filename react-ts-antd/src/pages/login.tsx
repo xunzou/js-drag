@@ -26,58 +26,61 @@ function Login() {
     //   {auth ? history.push('/') : ''}
     //   <button onClick={login}> 点这里登陆 </button>
     // </div>
-    <div className="login">
-      <div className="logo">
-        <h1>登录页面</h1>
-      </div>
-      <div>
-      <Tabs defaultActiveKey="1" animated={false} onChange={callback}>
-        <TabPane tab="账户密码登录" key="1">
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{ remember: true }}
-          >
-            <Form.Item
-              name="username"
-              rules={[{ required: true, message: 'Please input your Username!' }]}
+    <div className="login_wrap">
+      <div className="login">
+        <div className="logo">
+          <h1>登录页面</h1>
+        </div>
+        <div>
+        <Tabs defaultActiveKey="1" animated={false} onChange={callback}>
+          <TabPane tab="账户密码登录" key="1">
+            <Form
+              name="normal_login"
+              className="login-form"
+              initialValues={{ remember: true }}
             >
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[{ required: true, message: 'Please input your Password!' }]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Item>
-            <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
+              <Form.Item
+                name="username"
+                rules={[{ required: true, message: 'Please input your Username!' }]}
+              >
+                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[{ required: true, message: 'Please input your Password!' }]}
+              >
+                <Input
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  type="password"
+                  placeholder="Password"
+                />
+              </Form.Item>
+              <Form.Item>
+                <Form.Item name="remember" valuePropName="checked" noStyle>
+                  <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+
+                <a className="login-form-forgot" href="">
+                  Forgot password
+                </a>
               </Form.Item>
 
-              <a className="login-form-forgot" href="">
-                Forgot password
-              </a>
-            </Form.Item>
+              <Form.Item>
+                <Button type="primary" block htmlType="submit" className="login-form-button">
+                  Log in
+                </Button>
+                Or <a href="">register now!</a>
+              </Form.Item>
+            </Form>
 
-            <Form.Item>
-              <Button type="primary" block htmlType="submit" className="login-form-button">
-                Log in
-              </Button>
-              Or <a href="">register now!</a>
-            </Form.Item>
-          </Form>
-
-        </TabPane>
-        <TabPane tab="手机号登录" key="2">
-          Content of Tab Pane 2
-        </TabPane>
-      </Tabs>,
+          </TabPane>
+          <TabPane tab="手机号登录" key="2">
+            Content of Tab Pane 2
+          </TabPane>
+        </Tabs>,
+        </div>
       </div>
+
     </div>
   );
 }
