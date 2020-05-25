@@ -6,9 +6,12 @@
   background-size: cover;
 }
 .login {
-  width: 360px;
+  width: 470px;
   margin: 100px auto;
-
+  background: #FFF url(../images/login/bg-pattern-2.png) no-repeat;
+  background-size: cover;
+  border-radius: 5px;
+  padding: 30px;
 }
 .login h1{
   text-align: center;
