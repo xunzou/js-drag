@@ -1,6 +1,6 @@
 import React from 'react';
-import { useHistory,} from 'react-router-dom';
-import { authSuccess ,isAuth} from '../utils/Session'
+// import { useHistory,} from 'react-router-dom';
+// import { authSuccess ,isAuth} from '../utils/Session'
 import { Tabs } from 'antd';
 
 import { Form, Input, Button, Checkbox } from 'antd';
@@ -11,11 +11,11 @@ const { TabPane } = Tabs;
 
 
 function Login() {
-  const history = useHistory()
-  const auth = !!isAuth()
-  const login = ()=> {
-    history.push('/')
-  }
+  // const history = useHistory()
+  // const auth = !!isAuth()
+  // const login = ()=> {
+  //   history.push('/')
+  // }
 
   function callback(key:string) {
     console.log(key);
@@ -61,15 +61,15 @@ function Login() {
                 </Form.Item>
 
                 <a className="login-form-forgot" href="">
-                  Forgot password
+                  忘记密码
                 </a>
               </Form.Item>
 
               <Form.Item>
                 <Button type="primary" block htmlType="submit" className="login-form-button">
-                  Log in
+                  登录
                 </Button>
-                Or <a href="">register now!</a>
+                Or <a href="">注册</a>
               </Form.Item>
             </Form>
 
@@ -77,7 +77,7 @@ function Login() {
           <TabPane tab="手机号登录" key="2">
             Content of Tab Pane 2
           </TabPane>
-        </Tabs>,
+        </Tabs>
         </div>
       </div>
 
