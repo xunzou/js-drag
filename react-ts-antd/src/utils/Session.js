@@ -12,7 +12,7 @@ export function logout () {
   _setCookie(LOGIN_COOKIE_NAME, '', 0)
 }
 
-function _getCookie (name) {
+export function _getCookie (name) {
   let start, end
   if (document.cookie.length > 0) {
     start = document.cookie.indexOf(name + '=')
@@ -28,7 +28,7 @@ function _getCookie (name) {
   return ''
 }
 
-function _setCookie (name, value, expire) {
+export function _setCookie (name, value, expire) {
   let date = new Date()
   date.setDate(date.getDate() + expire)
   document.cookie = name + '=' + escape(value) + '; path=/' +

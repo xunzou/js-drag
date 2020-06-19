@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import Sidebar from './sidebar'
 import Main from './main'
+import MiniHeader from './mini-header'
 import { Layout } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons';
-
+import '../assets/style/layout.css'
 const { Header, Content, Footer, Sider } = Layout;
-// import { Link, Switch, Route } from 'react-router-dom';
-
-// import Home from '../../pages/home'
-// import AppManager from '../../pages/app/index'
-// import TagsManager from '../../pages/tags/index'
 
 function MyLayout() {
   const [collapsed,setCollapsed] = useState(false)
@@ -20,7 +16,6 @@ function MyLayout() {
     setCollapsed(!collapsed)
   }
   return (
-    <>
       <Layout style={{ minHeight: '100vh' }}>
         <Sider trigger={null} collapsible  collapsed={collapsed}>
             <Sidebar />
@@ -31,14 +26,15 @@ function MyLayout() {
               className: 'trigger',
               onClick: sc,
             })}
+
+            <MiniHeader />
           </Header>
           <Content style={{ margin: '18px' }}>
             <Main/>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>www.jesem.com</Footer>
+          <Footer style={{ textAlign: 'center' }}>www.xunzou.com</Footer>
         </Layout>
       </Layout>
-    </>
   );
 }
 
