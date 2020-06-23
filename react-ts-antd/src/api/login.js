@@ -3,7 +3,7 @@
  * @Date: 2020-06-19 10:37:42
  * @Desc: login
  * @Last Modified by: ylq
- * @Last Modified time: 2020-06-19 14:50:08
+ * @Last Modified time: 2020-06-23 17:41:16
  */
 import { axios } from '../utils/Axios'
 /**
@@ -34,6 +34,53 @@ class AuthService {
     return axios({
       url: '/user/exit',
       method:'post',
+    })
+  }
+  
+  /**
+   * 设置当前用户
+   *
+   * @author xunzou
+   * @param {*} data
+   * @returns
+   * @memberof AuthService
+   */
+  setUser(data){
+    return axios({
+      method:'post',
+      url: '/user/setuser',
+      data
+    })
+  }
+  
+  /**
+   *  获取当前用户所有身份
+   *
+   * @author xunzou
+   * @param {*} data
+   * @returns
+   * @memberof AuthService
+   */
+  getUserRoles(data){
+    return axios({
+      method:'post',
+      url: '/user/getuser',
+      data
+    })
+  }
+  /**
+   * 获取用户权限
+   *
+   * @author xunzou
+   * @param {*} data
+   * @returns
+   * @memberof User
+   */
+  getPers (data) {
+    return axios({
+      method:'post',
+      url: '/user/pers',
+      data,
     })
   }
 }

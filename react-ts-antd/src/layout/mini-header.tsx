@@ -1,13 +1,15 @@
 import React from 'react';
 import {  Menu, Dropdown } from 'antd';
 import { DownOutlined,} from '@ant-design/icons';
-import { logout ,_setCookie } from '../utils/Session'
+import { logout} from '../utils/Session'
 
 import {withRouter, Link } from 'react-router-dom';
 
 function headerMenu(props:any){
   let history = props.history
-  const onClick = ({ key }) => {
+  // :({ item:string; key:string; keyPath:string; domEvent:HTMLDivElement }) => void
+  const onClick = (arg:any) => {
+    let key = arg.key
     console.log(props)
     if(key === 'logout'){
       logout()

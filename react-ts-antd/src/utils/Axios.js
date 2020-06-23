@@ -3,7 +3,7 @@
  * @Date: 2020-06-17 14:58:03
  * @Desc: Axios 
  * @Last Modified by: ylq
- * @Last Modified time: 2020-06-19 14:59:55
+ * @Last Modified time: 2020-06-23 17:13:28
  */
 
 import axios from 'axios'
@@ -148,6 +148,7 @@ http.interceptors.response.use(response => {
     //   path: '/login',
     //   query: { back: router.currentRoute.fullPath }
     // })
+    window.location.href = '/login'
     logout()
   } else {
     // 存储当前时间
