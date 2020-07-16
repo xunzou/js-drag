@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link,withRouter } from 'react-router-dom';
 import { Menu } from 'antd';
 import {
   UserOutlined,
@@ -7,25 +7,88 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 
-function Sidebar() {
+
+const { SubMenu } = Menu;
+
+const menus = [
+  {
+    title: '工作台',
+    icon: () => <UserOutlined />,
+    key: '/dashboard'
+  },
+  {
+    title: '线索管理',
+    icon: () => <VideoCameraOutlined />,
+    key: '/clue',
+    subs:[
+      {key: '/clue/index', title: '我的线索', icon: '',},
+      {key: '/clue/sub', title: '下属线索', icon: '',},
+      {key: '/clue/all', title: '全部线索', icon: '',},
+    ],
+  },
+  {
+    title: '线索公海',
+    icon: () => <UploadOutlined />,
+    key: '/clue-sea'
+  },
+
+]
+
+
+function Sidebar(props) {
+  const pathName = props.location.pathname
+  console.log(pathName)
+  const [defKeys,setDefKeys] = useState([pathName])
+  const [openKeys,setOpenKeys] = useState(pathName.substr(0, pathName.lastIndexOf('/')))
+  useEffect(() => {
+    const rank = pathName.split('/')
+    console.log(rank,pathName)
+    switch (rank.length) {
+      case 2 :  //一级目录
+        setDefKeys([pathName])
+        setOpenKeys([])
+        break;
+      // case 5 : //三级目录，要展开两个subMenu
+      //   // this.setState({
+      //   //   selectedKeys: [pathname],
+      //   //   openKeys: [rank.slice(0, 3).join('/'), rank.slice(0, 4).join('/')]
+      //   // })
+      //   break;
+      default :
+        // 默认二级菜单
+        console.log(pathName.substr(0, pathName.lastIndexOf('/')))
+        setDefKeys([pathName])
+        setOpenKeys(pathName.substr(0, pathName.lastIndexOf('/')))
+    }
+  },[pathName])
+
+  // 打开关闭二级菜单
+  const onOpenChange = (openKeys: string[]) => {
+    console.log(openKeys)
+    setOpenKeys(openKeys)
+  }
+  
   return (
     <div className="sidebar">
       <div className="logo" />
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-        <Menu.Item key="1">
-          <Link className={"nav-link"} to={"/"}>
-            <UserOutlined /><span>Home</span> 
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Link className={"nav-link"} to={"/app"}> <VideoCameraOutlined /><span>应用管理</span> </Link>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Link className={"nav-link"} to={"/tags"}> <UploadOutlined /><span>标签管理</span> </Link>
-        </Menu.Item>
+      {defKeys}：
+      {openKeys}
+      <Menu theme="dark" mode="inline" selectedKeys={defKeys} openKeys={openKeys} onOpenChange={onOpenChange}>
+        {menus.map((el) => (
+          el.subs && el.subs.length ? 
+            <SubMenu key={el.key} title={<span>{el.icon && el.icon()}<span>{el.title}</span></span>}>
+              {el.subs.map(ele => (
+                <Menu.Item key={ele.key}><Link className={"sub-nav-link"} to={ele.key}><span>{ele.title}</span></Link></Menu.Item>
+              ))}
+            </SubMenu>
+          :<Menu.Item key={el.key}>
+            <Link className={"nav-link"} to={el.key}>{el.icon && el.icon()}<span>{el.title}</span> </Link>
+          </Menu.Item>
+        ))}
       </Menu>
     </div>
   );
 }
 
-export default Sidebar;
+
+export default withRouter(Sidebar);
