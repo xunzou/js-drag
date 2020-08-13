@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link,withRouter } from 'react-router-dom';
+import { Link,withRouter,RouteComponentProps} from 'react-router-dom';
 import { Menu } from 'antd';
 import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+
 
 
 const { SubMenu } = Menu;
@@ -34,12 +35,13 @@ const menus = [
 
 ]
 
+interface SidebarRouteProps extends RouteComponentProps  {}
 
-function Sidebar(props) {
+function Sidebar(props:SidebarRouteProps) {
   const pathName = props.location.pathname
   console.log(pathName)
   const [defKeys,setDefKeys] = useState([pathName])
-  const [openKeys,setOpenKeys] = useState(pathName.substr(0, pathName.lastIndexOf('/')))
+  const [openKeys,setOpenKeys] = useState<string[]>([pathName.substr(0, pathName.lastIndexOf('/'))])
   useEffect(() => {
     const rank = pathName.split('/')
     console.log(rank,pathName)
@@ -58,7 +60,7 @@ function Sidebar(props) {
         // 默认二级菜单
         console.log(pathName.substr(0, pathName.lastIndexOf('/')))
         setDefKeys([pathName])
-        setOpenKeys(pathName.substr(0, pathName.lastIndexOf('/')))
+        setOpenKeys([pathName.substr(0, pathName.lastIndexOf('/'))])
     }
   },[pathName])
 
