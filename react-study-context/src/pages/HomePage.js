@@ -5,6 +5,7 @@ class HomePage extends React.Component {
   static contextType = UserContext;
   constructor(props){
     super(props)
+    console.log(props)
     this.state = {
       user: {}
     }
@@ -18,6 +19,9 @@ class HomePage extends React.Component {
       user,
     })
   }
+
+  
+
 
   render(){
     return <div>{this.state.user.name}</div>
