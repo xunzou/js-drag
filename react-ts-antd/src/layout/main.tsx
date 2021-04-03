@@ -1,15 +1,19 @@
 import React from 'react';
 import { Switch ,Redirect} from 'react-router-dom';
 import PrivateRoute from '../components/Private'
-import Home from '../pages/home'
-import AppManager from '../pages/app/index'
-import TagsManager from '../pages/tags/index'
-import error from '../pages/404'
+import loadCom from '../utils/LoadableCom'
+
+
+const Home = loadCom(()=>import('../pages/home'))
+const AppManager = loadCom(()=>import('../pages/app/index'))
+const TagsManager = loadCom(()=>import('../pages/tags/index'))
+const error = loadCom(()=>import('../pages/404'))
+
 
 function main() {
 
   return (
-    <div>
+    <>
       <Switch>
         <PrivateRoute exact path={'/home'} component={Home} />
         <PrivateRoute exact path={'/app'} component={AppManager}/>
@@ -17,7 +21,7 @@ function main() {
         <Redirect exact from='/' to='/home'/>
         <PrivateRoute path={"*"} component={error} />
       </Switch>
-    </div>
+    </>
   );
 }
 
